@@ -43,6 +43,7 @@ public class NlyteSheet extends Sheet {
 		}
 		return values[8].trim();
 	}
+	
 
 	public String getNumber() {
 		return values[1].trim();
