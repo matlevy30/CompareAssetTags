@@ -33,6 +33,8 @@ public class NlyteSheet extends Sheet {
 	@Override
 	public String operationalStatus() {
 		return values[6].trim();
+		
+		
 	}
 
 	@Override
