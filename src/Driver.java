@@ -62,6 +62,7 @@ public class Driver {
 						update.add(addSerial(nlyte.get(i), uapm.get(j).serialNumber()));
 					}
 					//Remove from List
+					
 					missingTags.remove(uapm.get(j));
 					found = true;
 					break;
