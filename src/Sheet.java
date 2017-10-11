@@ -13,6 +13,10 @@ public abstract class Sheet {
 
 	public abstract String HostName();
 	
+	public abstract String operationalStatus();
+	
+	public abstract String cabinateName();
+	
 	public String getNumber() {
 		throw new UnsupportedOperationException("Can't do this with UAPM sheet");
 	}
@@ -28,6 +32,9 @@ public abstract class Sheet {
 	public void setAssetTag(String s) {
 		throw new UnsupportedOperationException("Can't do this with UAPM sheet");
 	}
+	
+	
+	
 
 	// Printing line values, local methods
 	@Override

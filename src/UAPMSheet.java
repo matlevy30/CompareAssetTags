@@ -20,6 +20,17 @@ public class UAPMSheet extends Sheet{
 		public String HostName() {
 			return values[0].trim();
 		}
+		
+		@Override
+		public String operationalStatus() {
+			return values[3].trim();
+		}
+
+		@Override
+		public String cabinateName() {
+			// TODO Auto-generated method stub
+			return null;
+		}
 
 	}
 

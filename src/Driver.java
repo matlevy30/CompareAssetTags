@@ -4,7 +4,6 @@ import java.util.ArrayList;
 public class Driver {
 	// REMEMBER TO CHAGE , TO . for the UAPM file and use txt to do this change
 	public static ArrayList<Sheet> missingTags;
-	public static ArrayList<Sheet> haveTags;
 	public static ArrayList<Sheet> TagstoFix;
 	public static ArrayList<Sheet> update;
 
@@ -28,8 +27,6 @@ public class Driver {
 		// Assets where found Tags and No Serial and Vice versa
 		update = new ArrayList<>();
 
-		// Tags in Nlyte that matched with UAPM
-		haveTags = new ArrayList<>();
 		// =======================================================================
 		// Comparing Asset Tag Info for both Nlyte -> UAPM
 		compareTag(NlyteInfo, UAPMInfo);
@@ -39,9 +36,6 @@ public class Driver {
 		write.wirte();
 
 		write = new WriteCSV(nlyte.getHeader(), TagstoFix, "Fix.csv");
-		write.wirte();
-
-		write = new WriteCSV(uapm.getHeader(), haveTags, "Have.csv");
 		write.wirte();
 
 		write = new WriteCSV(nlyte.getHeader(), update, "Update.csv");
@@ -61,10 +55,10 @@ public class Driver {
 				// If the tag is found then add it to the haveTag list and remove from
 				// missingTag
 				if (uapm.get(j).assetTag().equals(nlyte.get(i).assetTag())) {
-					haveTags.add(uapm.get(j));
+					
 					// Determining if serial numbers match if they don't update serial
-					if (!(nlyte.get(i).serialNumber().equalsIgnoreCase(uapm.get(j).serialNumber()))) {
-						System.out.println(uapm.get(j).assetTag() + " "+ uapm.get(j).serialNumber());
+					if (!(uapm.get(j).serialNumber().contains("Â")) && !(nlyte.get(i).serialNumber().equalsIgnoreCase(uapm.get(j).serialNumber()))) {
+						//System.out.println(uapm.get(j).assetTag() + " "+ uapm.get(j).serialNumber());
 						update.add(addSerial(nlyte.get(i), uapm.get(j).serialNumber()));
 					}
 					//Remove from List
@@ -72,10 +66,9 @@ public class Driver {
 					found = true;
 					break;
 				} else if (uapm.get(j).serialNumber().equals(nlyte.get(i).serialNumber()) && !(uapm.get(j).serialNumber().equals(""))) {
-					haveTags.add(uapm.get(j));
 					//Assets to be updated by adding the Asset tag by comparing Serial Numbers
-					if (!(nlyte.get(i).HostName().contains("Module"))) {
-						//System.out.println(uapm.get(j).assetTag() + " "+ uapm.get(j).serialNumber());
+					if (!(nlyte.get(i).HostName().contains("Module")) && !(nlyte.get(i).assetTag().contains("CHILD"))) {
+						System.out.println(uapm.get(j).assetTag() + " "+ uapm.get(j).serialNumber());
 						//update.add(addTag(nlyte.get(i), uapm.get(j).assetTag()));
 					}
 					//Remove from List
