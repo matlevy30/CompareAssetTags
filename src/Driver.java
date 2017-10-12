@@ -6,6 +6,7 @@ public class Driver {
 	public static ArrayList<Sheet> missingTags;
 	public static ArrayList<Sheet> TagstoFix;
 	public static ArrayList<Sheet> update;
+	public static ArrayList<Sheet> status;
 
 	public static void main(String[] args) throws IOException {
 		// Reading Nlyte XLSX file
@@ -27,6 +28,9 @@ public class Driver {
 		// Assets where found Tags and No Serial and Vice versa
 		update = new ArrayList<>();
 
+		// Assets In Use in UAPM but Not Operational
+		status = new ArrayList<>();
+
 		// =======================================================================
 		// Comparing Asset Tag Info for both Nlyte -> UAPM
 		compareTag(NlyteInfo, UAPMInfo);
@@ -40,14 +44,17 @@ public class Driver {
 
 		write = new WriteCSV(nlyte.getHeader(), update, "Update.csv");
 		write.wirte();
+		
+		write = new WriteCSV(nlyte.getHeader(), status, "Status.csv");
+		write.wirte();
 
 	}
 
 	// Comparing Tags
 	public static void compareTag(ArrayList<Sheet> nlyte, ArrayList<Sheet> uapm) {
 		// Putting a copy of all uapm to missingTags
-		//missingTags.addAll(uapm);
-		missingTags = uapm;   // to find duplicates
+		// missingTags.addAll(uapm);
+		missingTags = uapm; // to find duplicates
 		// If tag was found or not
 		boolean found = false;
 		for (int i = 0; i != nlyte.size(); ++i) {
@@ -55,40 +62,54 @@ public class Driver {
 				// If the tag is found then add it to the haveTag list and remove from
 				// missingTag
 				if (uapm.get(j).assetTag().equals(nlyte.get(i).assetTag())) {
-					
+					// Has to be Active Operational
+					if (!nlyte.get(i).operationalStatus().equals("Operational")) {
+						status.add(nlyte.get(i));
+					}
 					// Determining if serial numbers match if they don't update serial
-					if (!(uapm.get(j).serialNumber().contains("Â")) && !(nlyte.get(i).serialNumber().equalsIgnoreCase(uapm.get(j).serialNumber()))) {
-						//System.out.println(uapm.get(j).assetTag() + " "+ uapm.get(j).serialNumber());
+					else if (!(uapm.get(j).serialNumber().contains("Â"))
+							&& !(nlyte.get(i).serialNumber().equalsIgnoreCase(uapm.get(j).serialNumber()))) {
+						System.out.println(uapm.get(j).assetTag() + " "+ uapm.get(j).serialNumber());
 						update.add(addSerial(nlyte.get(i), uapm.get(j).serialNumber()));
 					}
-					//Remove from List
+					// Remove from List
 					missingTags.remove(uapm.get(j));
 					found = true;
 					break;
-				} else if (uapm.get(j).serialNumber().equals(nlyte.get(i).serialNumber()) && !(uapm.get(j).serialNumber().equals(""))) {
-					//Assets to be updated by adding the Asset tag by comparing Serial Numbers
-					if (!(nlyte.get(i).HostName().contains("Module")) && !(nlyte.get(i).assetTag().contains("CHILD"))) {
-						System.out.println(uapm.get(j).assetTag() + " "+ uapm.get(j).serialNumber());
-						//update.add(addTag(nlyte.get(i), uapm.get(j).assetTag()));
+
+				} else if (uapm.get(j).serialNumber().equals(nlyte.get(i).serialNumber())
+						&& !(uapm.get(j).serialNumber().equals(""))) {
+					// Has to be Active Operational
+					if (!nlyte.get(i).operationalStatus().equals("Operational")) {
+						status.add(nlyte.get(i));
 					}
-					//Remove from List
+					// Assets to be updated by adding the Asset tag by comparing Serial Numbers
+					else if (!(nlyte.get(i).HostName().contains("Module"))
+							&& !(nlyte.get(i).assetTag().contains("CHILD"))) {
+						//System.out.println(uapm.get(j).assetTag() + " " + uapm.get(j).serialNumber());
+						// update.add(addTag(nlyte.get(i), uapm.get(j).assetTag()));
+					}
+					// Remove from List
 					missingTags.remove(uapm.get(j));
 					found = true;
 					break;
 				}
-			}
-			if (!found) {
-				//Assets Tag that where not found in the UAPM sheet or have some kind of typo or funny info
-				if (!(nlyte.get(i).assetTag().equals("")) && !( nlyte.get(i).assetTag().contains("N/A")) && !( nlyte.get(i).assetTag().contains("CHILD"))) {
-					TagstoFix.add(nlyte.get(i));
-				}
-			}
-			found = false;
 		}
+		if (!found) {
+			// Assets Tag that where not found in the UAPM sheet or have some kind of typo
+			// or funny info
+			if (!(nlyte.get(i).assetTag().equals("")) && !(nlyte.get(i).assetTag().contains("N/A"))
+					&& !(nlyte.get(i).assetTag().contains("CHILD"))) {
+				TagstoFix.add(nlyte.get(i));
+			}
+		}
+		found = false;
+	}
+
 	}
 
 	// Adding Serial Numbers from Asset Tags
-	//@SuppressWarnings("unused")
+	// @SuppressWarnings("unused")
 	private static Sheet addSerial(Sheet nlyte, String serial) {
 		nlyte.setSerial(serial);
 		return nlyte;
