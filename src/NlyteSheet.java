@@ -38,8 +38,8 @@ public class NlyteSheet extends Sheet {
 
 	@Override
 	public String cabinateName() {
-		if (values[8].equals("")) {
-			return HostName();
+		if (values[8].length() != 6) {
+			return "No Cab";
 		}
 		return values[8].trim();
 	}

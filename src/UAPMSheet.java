@@ -28,8 +28,6 @@ public class UAPMSheet extends Sheet{
 
 		@Override
 		public String cabinateName() {
-			System.out.print(values[4] +" ");
-			System.out.println(values[5]);
 			StringBuilder sb = new StringBuilder();
 			int pod = values[4].length() -1;
 			sb.append(values[4].substring(pod));
