@@ -28,8 +28,17 @@ public class UAPMSheet extends Sheet{
 
 		@Override
 		public String cabinateName() {
-			// TODO Auto-generated method stub
-			return null;
+			System.out.print(values[4] +" ");
+			System.out.println(values[5]);
+			StringBuilder sb = new StringBuilder();
+			int pod = values[4].length() -1;
+			sb.append(values[4].substring(pod));
+			
+			int pos = values[5].indexOf("-");
+			sb.append(values[5].substring(0, pos));
+			sb.append(values[5].substring(pos+1, values[5].length()));
+			
+			return sb.toString();
 		}
 
 	}

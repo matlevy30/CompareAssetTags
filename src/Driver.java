@@ -30,7 +30,7 @@ public class Driver {
 
 		// Assets In Use in UAPM but Not Operational
 		status = new ArrayList<>();
-
+		
 		// =======================================================================
 		// Comparing Asset Tag Info for both Nlyte -> UAPM
 		compareTag(NlyteInfo, UAPMInfo);
@@ -61,6 +61,7 @@ public class Driver {
 			for (int j = 0; j != uapm.size(); ++j) {
 				// If the tag is found then add it to the haveTag list and remove from
 				// missingTag
+				//uapm.get(j).cabinateName();
 				if (uapm.get(j).assetTag().equals(nlyte.get(i).assetTag())) {
 					// Has to be Active Operational
 					if (!nlyte.get(i).operationalStatus().equals("Operational")) {
@@ -69,8 +70,8 @@ public class Driver {
 					// Determining if serial numbers match if they don't update serial
 					else if (!(uapm.get(j).serialNumber().contains("Â"))
 							&& !(nlyte.get(i).serialNumber().equalsIgnoreCase(uapm.get(j).serialNumber()))) {
-						System.out.println(uapm.get(j).assetTag() + " "+ uapm.get(j).serialNumber());
-						update.add(addSerial(nlyte.get(i), uapm.get(j).serialNumber()));
+						//System.out.println(uapm.get(j).assetTag() + " "+ uapm.get(j).serialNumber());
+						//update.add(addSerial(nlyte.get(i), uapm.get(j).serialNumber()));
 					}
 					// Remove from List
 					missingTags.remove(uapm.get(j));
@@ -86,7 +87,7 @@ public class Driver {
 					// Assets to be updated by adding the Asset tag by comparing Serial Numbers
 					else if (!(nlyte.get(i).HostName().contains("Module"))
 							&& !(nlyte.get(i).assetTag().contains("CHILD"))) {
-						//System.out.println(uapm.get(j).assetTag() + " " + uapm.get(j).serialNumber());
+						System.out.println(uapm.get(j).assetTag() + " " + uapm.get(j).serialNumber());
 						// update.add(addTag(nlyte.get(i), uapm.get(j).assetTag()));
 					}
 					// Remove from List
@@ -109,7 +110,7 @@ public class Driver {
 	}
 
 	// Adding Serial Numbers from Asset Tags
-	// @SuppressWarnings("unused")
+	@SuppressWarnings("unused")
 	private static Sheet addSerial(Sheet nlyte, String serial) {
 		nlyte.setSerial(serial);
 		return nlyte;
