@@ -80,7 +80,7 @@ public class Driver {
 						//System.out.println(uapm.get(j).assetTag() + " "+ uapm.get(j).serialNumber());
 						//update.add(addSerial(nlyte.get(i), uapm.get(j).serialNumber()));
 					}
-					
+					//Comparing Cabinate Location
 					if(!nlyte.get(i).cabinateName().equals("No Cab") && !uapm.get(j).cabinateName().equals(nlyte.get(i).cabinateName()) ) {
 						cabinate.add(nlyte.get(i));
 						System.out.println(uapm.get(j).cabinateName() + " " + nlyte.get(i).cabinateName());
