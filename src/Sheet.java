@@ -21,10 +21,6 @@ public abstract class Sheet {
 		throw new UnsupportedOperationException("Can't do this with UAPM sheet");
 	}
 
-	public String[] getLine() {
-		return values;
-	}
-
 	public void setSerial(String s) {
 		throw new UnsupportedOperationException("Can't do this with UAPM sheet");
 	}
@@ -33,9 +29,9 @@ public abstract class Sheet {
 		throw new UnsupportedOperationException("Can't do this with UAPM sheet");
 	}
 	
-	
-	
-
+	public String[] getLine() {
+		return values;
+	}
 	// Printing line values, local methods
 	@Override
 	public String toString() {

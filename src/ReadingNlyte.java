@@ -42,7 +42,7 @@ public class ReadingNlyte extends Reading {
 			}
 		}
 	}
-
+	
 	// Filtering Blank and N/A Serial Number
 	private boolean blankSerial(String[] line) {
 		if (line[3].equals("") || line[3].equals("N/A")) {

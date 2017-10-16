@@ -25,8 +25,9 @@ public class ReadingUAPM extends Reading {
 
 		while (line != null) {
 			// Filtering Locations
-			if (filterStatus(line) && filterLocation(line))
-				lines.add(new UAPMSheet(line));
+			if (filterStatus(line) && filterLocation(line)) {
+					lines.add(new UAPMSheet(line));
+			}
 			line = reader.readNext();
 		}
 
@@ -44,7 +45,7 @@ public class ReadingUAPM extends Reading {
 		// OCE Locations
 		if (line[6].contains("Ashburn")) {
 			if (line[4].contains("Pod") && !(line[5].equals("Tape Library"))) {
-				return true;
+				return exceptionTags(line);
 			}
 		}
 		return false;
@@ -55,6 +56,17 @@ public class ReadingUAPM extends Reading {
 			return true;
 		}
 		return false;
+	}
+
+	// Filter by Tags that are not Active Operational but In Use in UAPM
+	private boolean exceptionTags(String[] line) {
+		String[] tags = { "5000006041", "1000014833", "1000124937", "1000124938", "1000094431" };
+		for (String tag : tags) {
+			if (tag.equals(line[1])) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 }

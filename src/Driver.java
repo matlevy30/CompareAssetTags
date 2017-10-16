@@ -31,10 +31,10 @@ public class Driver {
 
 		// Assets In Use in UAPM but Not Operational
 		status = new ArrayList<>();
-		
+
 		// Assets Cabinate Match
 		cabinate = new ArrayList<>();
-		
+
 		// =======================================================================
 		// Comparing Asset Tag Info for both Nlyte -> UAPM
 		compareTag(NlyteInfo, UAPMInfo);
@@ -48,10 +48,10 @@ public class Driver {
 
 		write = new WriteCSV(nlyte.getHeader(), update, "Update.csv");
 		write.wirte();
-		
+
 		write = new WriteCSV(nlyte.getHeader(), status, "Status.csv");
 		write.wirte();
-		
+
 		write = new WriteCSV(nlyte.getHeader(), cabinate, "Cabinate.csv");
 		write.wirte();
 
@@ -62,62 +62,61 @@ public class Driver {
 		// Putting a copy of all uapm to missingTags
 		// missingTags.addAll(uapm);
 		missingTags = uapm; // to find duplicates
-		// If tag was found or not
-		boolean found = false;
+		boolean found = false; // If tag was found or not
+		RepoCompare comparator = new RepoCompare(); // Comparator
 		for (int i = 0; i != nlyte.size(); ++i) {
 			for (int j = 0; j != uapm.size(); ++j) {
 				// If the tag is found then add it to the haveTag list and remove from
 				// missingTag
-				//uapm.get(j).cabinateName();
-				if (uapm.get(j).assetTag().equals(nlyte.get(i).assetTag())) {
+				if (comparator.compareTag(nlyte.get(i), uapm.get(j))) {
 					// Has to be Active Operational
-					if (!nlyte.get(i).operationalStatus().equals("Operational")) {
+					if (comparator.statusCompare(nlyte.get(i))) {
 						status.add(nlyte.get(i));
 					}
 					// Determining if serial numbers match if they don't update serial
-					else if (!(uapm.get(j).serialNumber().contains("Â"))
-							&& !(nlyte.get(i).serialNumber().equalsIgnoreCase(uapm.get(j).serialNumber()))) {
-						//System.out.println(uapm.get(j).assetTag() + " "+ uapm.get(j).serialNumber());
-						//update.add(addSerial(nlyte.get(i), uapm.get(j).serialNumber()));
+					else if (comparator.serialVerification(nlyte.get(i), uapm.get(j))) {
+						System.out.println(uapm.get(j).assetTag() + " " + uapm.get(j).serialNumber());
+						// update.add(addSerial(nlyte.get(i), uapm.get(j).serialNumber()));
 					}
-					//Comparing Cabinate Location
-					if(!nlyte.get(i).cabinateName().equals("No Cab") && !uapm.get(j).cabinateName().equals(nlyte.get(i).cabinateName()) ) {
+					// Comparing Cabinate Location
+					if (comparator.cabinateCompare(nlyte.get(i), uapm.get(j))) {
 						cabinate.add(nlyte.get(i));
-						System.out.println(uapm.get(j).cabinateName() + " " + nlyte.get(i).cabinateName());
+						// System.out.println(uapm.get(j).cabinateName() + " " +
+						// nlyte.get(i).cabinateName());
 					}
-					// Remove from List
-					missingTags.remove(uapm.get(j));
 					found = true;
-					break;
 
 				} else if (uapm.get(j).serialNumber().equals(nlyte.get(i).serialNumber())
 						&& !(uapm.get(j).serialNumber().equals(""))) {
 					// Has to be Active Operational
-					if (!nlyte.get(i).operationalStatus().equals("Operational")) {
+					if (comparator.statusCompare(nlyte.get(i))) {
 						status.add(nlyte.get(i));
 					}
 					// Assets to be updated by adding the Asset tag by comparing Serial Numbers
 					else if (!(nlyte.get(i).HostName().contains("Module"))
 							&& !(nlyte.get(i).assetTag().contains("CHILD"))) {
-						//System.out.println(uapm.get(j).assetTag() + " " + uapm.get(j).serialNumber());
+						// System.out.println(uapm.get(j).assetTag() + " " +
+						// uapm.get(j).serialNumber());
 						// update.add(addTag(nlyte.get(i), uapm.get(j).assetTag()));
 					}
+					found = true;
+				}
+				if (found) {
 					// Remove from List
 					missingTags.remove(uapm.get(j));
-					found = true;
 					break;
 				}
-		}
-		if (!found) {
-			// Assets Tag that where not found in the UAPM sheet or have some kind of typo
-			// or funny info
-			if (!(nlyte.get(i).assetTag().equals("")) && !(nlyte.get(i).assetTag().contains("N/A"))
-					&& !(nlyte.get(i).assetTag().contains("CHILD"))) {
-				TagstoFix.add(nlyte.get(i));
 			}
+			if (!found) {
+				// Assets Tag that where not found in the UAPM sheet or have some kind of typo
+				// or funny info
+				if (!(nlyte.get(i).assetTag().equals("")) && !(nlyte.get(i).assetTag().contains("N/A"))
+						&& !(nlyte.get(i).assetTag().contains("CHILD"))) {
+					TagstoFix.add(nlyte.get(i));
+				}
+			}
+			found = false;
 		}
-		found = false;
-	}
 
 	}
 
