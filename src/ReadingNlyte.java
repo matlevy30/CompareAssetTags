@@ -75,7 +75,7 @@ public class ReadingNlyte extends Reading {
 	protected boolean filterLocation(String[] line) {
 		// OCC Locations Rooms
 		if (line[7].contains("Highlands Ranch")) {
-			if (line[7].contains("Data Hall") || line[7].contains("Floor")) {
+			if (line[7].contains("Data Hall") || line[7].contains("Floor") || line[7].contains("PKI Cage")) {
 				return true;
 			}
 		}

@@ -35,11 +35,11 @@ public class ReadingUAPM extends Reading {
 
 	protected boolean filterLocation(String[] line) {
 		// OCC Locations
-		if (line[6].contains("Highlands Ranch")) {
+		if (line[9].contains("Highlands Ranch")) {
 			if (line[4].equals("Data Center") || line[4].contains("Data Hall") || line[4].contains("Telco")
 					|| line[4].equals("Demarc") || line[4].equals("Hallway") || line[4].equals("Loading Dock")
 					|| line[4].contains("Storage Room") || line[4].contains("Tape") || line[4].contains("VOCC")) {
-				return true;
+				return exceptionTagsOCC(line);
 			}
 		}
 		// OCE Locations
@@ -61,6 +61,16 @@ public class ReadingUAPM extends Reading {
 	// Filter by Tags that are not Active Operational but In Use in UAPM
 	private boolean exceptionTags(String[] line) {
 		String[] tags = { "5000006041", "1000014833", "1000124937", "1000124938", "1000094431" };
+		for (String tag : tags) {
+			if (tag.equals(line[1])) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	private boolean exceptionTagsOCC(String[] line) {
+		String[] tags = { "1000120832", "1000120833" };
 		for (String tag : tags) {
 			if (tag.equals(line[1])) {
 				return false;
