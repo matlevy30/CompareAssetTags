@@ -9,9 +9,9 @@ public class ReadingUAPM extends Reading {
 
 	private CSVReader reader;
 
-	public ReadingUAPM() throws FileNotFoundException {
+	ReadingUAPM() throws FileNotFoundException {
 
-		String fileName = "src/UAPM.csv";
+		String fileName = "CompareAssetTags/src/UAPM.csv";
 		reader = new CSVReader(new FileReader(fileName));
 		lines = new ArrayList<>();
 	}
@@ -52,10 +52,7 @@ public class ReadingUAPM extends Reading {
 	}
 
 	private boolean filterStatus(String[] line) {
-		if (line[3].equals("In Use")) {
-			return true;
-		}
-		return false;
+		return line[3].equals("In Use");
 	}
 
 	// Filter by Tags that are not Active Operational but In Use in UAPM

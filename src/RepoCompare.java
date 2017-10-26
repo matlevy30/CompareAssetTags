@@ -2,13 +2,13 @@
 public class RepoCompare {
 
 	//Comparing String Tags
-	public boolean compareTag(Sheet nlyte, Sheet uapm) {
+	boolean compareTag(Sheet nlyte, Sheet uapm) {
 		return uapm.assetTag().equals(nlyte.assetTag());
 	}
 	
 	//After tag compare verify that serials are the same
-	public boolean serialVerification(Sheet nlyte, Sheet uapm) {
-		return !(uapm.serialNumber().contains("Â")) && !(nlyte.serialNumber().equalsIgnoreCase(uapm.serialNumber()));
+	boolean serialVerification(Sheet nlyte, Sheet uapm) {
+		return !(uapm.serialNumber().contains("?")) && !(nlyte.serialNumber().equalsIgnoreCase(uapm.serialNumber()));
 	}
 	
 	//Comparing Cabinates
@@ -17,7 +17,7 @@ public class RepoCompare {
 	}
 	
 	//Comparing Status
-	public boolean statusCompare(Sheet nlyte) {
+	boolean statusCompare(Sheet nlyte) {
 		return !nlyte.operationalStatus().equals("Operational");
 	}
 	
