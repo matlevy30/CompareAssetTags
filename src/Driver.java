@@ -9,12 +9,6 @@ public class Driver {
 	public static ArrayList<Sheet> status;
 	private static ArrayList<Sheet> cabinate;
 
-
-
-
-
-
-	
 	public static void main(String[] args) throws IOException {
 		// Reading Nlyte XLSX file
 		Reading nlyte = new ReadingNlyte();
