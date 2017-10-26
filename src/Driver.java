@@ -3,12 +3,12 @@ import java.util.ArrayList;
 
 public class Driver {
 	// REMEMBER TO CHAGE , TO . for the UAPM file and use txt to do this change
-	public static ArrayList<Sheet> missingTags;
-	public static ArrayList<Sheet> TagstoFix;
-	public static ArrayList<Sheet> update;
+	private static ArrayList<Sheet> missingTags;
+	private static ArrayList<Sheet> TagstoFix;
+	private static ArrayList<Sheet> update;
 	public static ArrayList<Sheet> status;
-	public static ArrayList<Sheet> cabinate;
-       
+	private static ArrayList<Sheet> cabinate;
+
 	public static void main(String[] args) throws IOException {
 		// Reading Nlyte XLSX file
 		Reading nlyte = new ReadingNlyte();
@@ -58,7 +58,7 @@ public class Driver {
 	}
 
 	// Comparing Tags
-	public static void compareTag(ArrayList<Sheet> nlyte, ArrayList<Sheet> uapm) {
+	private static void compareTag(ArrayList<Sheet> nlyte, ArrayList<Sheet> uapm) {
 		// Putting a copy of all uapm to missingTags
 		// missingTags.addAll(uapm);
 		missingTags = uapm; // to find duplicates
@@ -75,15 +75,14 @@ public class Driver {
 					}
 					// Determining if serial numbers match if they don't update serial
 					else if (comparator.serialVerification(nlyte.get(i), uapm.get(j))) {
-						//System.out.println(uapm.get(j).assetTag() + " " + uapm.get(j).serialNumber());
+						System.out.println(uapm.get(j).assetTag() + " " + uapm.get(j).serialNumber());
 						// update.add(addSerial(nlyte.get(i), uapm.get(j).serialNumber()));
 					}
 					// Comparing Cabinate Location
-					if (comparator.cabinateCompare(nlyte.get(i), uapm.get(j))) {
-						cabinate.add(nlyte.get(i));
-						// System.out.println(uapm.get(j).cabinateName() + " " +
-						// nlyte.get(i).cabinateName());
-					}
+					//if (comparator.cabinateCompare(nlyte.get(i), uapm.get(j))) {
+						//cabinate.add(nlyte.get(i));
+						//System.out.println(uapm.get(j).cabinateName() + " " +nlyte.get(i).cabinateName());
+					//}
 					found = true;
 
 				} else if (uapm.get(j).serialNumber().equals(nlyte.get(i).serialNumber())
@@ -95,7 +94,7 @@ public class Driver {
 					// Assets to be updated by adding the Asset tag by comparing Serial Numbers
 					else if (!(nlyte.get(i).HostName().contains("Module"))
 							&& !(nlyte.get(i).assetTag().contains("CHILD"))) {
-						//System.out.println(uapm.get(j).assetTag() + " " + uapm.get(j).serialNumber());
+						System.out.println(uapm.get(j).assetTag() + " " + uapm.get(j).serialNumber());
 						// update.add(addTag(nlyte.get(i), uapm.get(j).assetTag()));
 					}
 					found = true;
