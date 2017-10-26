@@ -1,8 +1,9 @@
 import java.io.FileWriter;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class WriteCSV {
+class WriteCSV {
 
 	// Delimiter used in CSV file
 	private static final String COMMA_DELIMITER = ",";
@@ -12,18 +13,19 @@ public class WriteCSV {
 	private ArrayList<Sheet> list;
 	private String fileName;
 
-	public WriteCSV(String[] header, ArrayList<Sheet> list, String fileName) {
+	WriteCSV(String[] header, ArrayList<Sheet> list, String fileName) {
 		this.header = header;
 		this.list = list;
 		this.fileName = fileName;
 		
 	}
 
-	public void wirte() {
-
+	void wirte() {
+		File f;
 		FileWriter file = null;
 		try {
-			file = new FileWriter(fileName);
+			f = new File("CompareAssetTags\\files",fileName);
+			file = new FileWriter(f);
 			//Header
 			int z = 0;
 			while (z != header.length - 1) {
@@ -44,7 +46,6 @@ public class WriteCSV {
 				}
 				file.append(l[j]);
 				file.append(NEW_LINE_SEPARATOR);
-				j = 0;
 			}
 
 		} catch (Exception e) {
