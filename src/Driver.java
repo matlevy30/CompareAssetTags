@@ -2,12 +2,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Driver {
-	// REMEMBER TO CHAGE , TO . for the UAPM file and use txt to do this change
+	// REMEMBER TO CHANGE , TO . for the UAPM file and use txt to do this change
 	private static ArrayList<Sheet> missingTags;
 	private static ArrayList<Sheet> TagstoFix;
 	private static ArrayList<Sheet> update;
 	public static ArrayList<Sheet> status;
-	private static ArrayList<Sheet> cabinate;
+	private static ArrayList<Sheet> cabinet;
 
 	public static void main(String[] args) throws IOException {
 		// Reading Nlyte XLSX file
@@ -33,7 +33,7 @@ public class Driver {
 		status = new ArrayList<>();
 
 		// Assets Cabinate Match
-		cabinate = new ArrayList<>();
+		cabinet = new ArrayList<>();
 
 		// =======================================================================
 		// Comparing Asset Tag Info for both Nlyte -> UAPM
@@ -52,7 +52,7 @@ public class Driver {
 		write = new WriteCSV(nlyte.getHeader(), status, "Status.csv");
 		write.wirte();
 
-		write = new WriteCSV(nlyte.getHeader(), cabinate, "Cabinate.csv");
+		write = new WriteCSV(nlyte.getHeader(), cabinet, "Cabinet.csv");
 		write.wirte();
 
 	}
@@ -78,11 +78,11 @@ public class Driver {
 						System.out.println(uapm.get(j).assetTag() + " " + uapm.get(j).serialNumber());
 						// update.add(addSerial(nlyte.get(i), uapm.get(j).serialNumber()));
 					}
-					// Comparing Cabinate Location
-					//if (comparator.cabinateCompare(nlyte.get(i), uapm.get(j))) {
-						//cabinate.add(nlyte.get(i));
+					// Comparing Cabinets Location
+					if (comparator.cabinetsCompare(nlyte.get(i), uapm.get(j))) {
+						cabinet.add(nlyte.get(i));
 						//System.out.println(uapm.get(j).cabinateName() + " " +nlyte.get(i).cabinateName());
-					//}
+					}
 					found = true;
 
 				} else if (uapm.get(j).serialNumber().equals(nlyte.get(i).serialNumber())

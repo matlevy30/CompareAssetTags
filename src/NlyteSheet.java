@@ -1,7 +1,7 @@
 
 public class NlyteSheet extends Sheet {
 
-	public NlyteSheet(String[] values) {
+	NlyteSheet(String[] values) {
 		super(values);
 	}
 
@@ -29,7 +29,7 @@ public class NlyteSheet extends Sheet {
 	@Override
 	public String cabinateName() {
 		if (values[8].length() != 6) {
-			return "No Cab";
+			return "NoCab";
 		}
 		return values[8].trim();
 	}
