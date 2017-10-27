@@ -1,0 +1,16 @@
+(Asset) Host Name,(Asset Asset) Asset Tag,(Asset) Serial #,(Asset Asset Version Portfolio Status) Value,(Asset Hardware Location Room) Location Name,(Asset Hardware Location Grid) Location Name,(Asset Location) Location Name,(Asset Asset Storage Area) Location Name,(Asset Model) Model Name,(Asset Model) Model #
+,5000018659,QTFCJ07370350,In Use,Pod 1,,Ashburn OCE Building,,Hitachi Content Platform S10,HCP-Rhino-G10
+,1000089883,QTFCKJ60600016,In Use,Pod 2,,Ashburn OCE Building,,T41S,T41S-2U
+,5000018618,1727NM786F,In Use,Pod 1,BT-049,Ashburn OCE Building,,Exadata Storage Server X6-2,7113348
+SM730CBPPerfQ02,5000014931,37-NC1310,In Use,Pod 2,AV-093,Ashburn OCE Building,,nShield Connect 6000+,NH2068
+,5000020212,SGH2132M11,In Use,Pod 5,BL-028,Ashburn OCE Building,,ProLiant BL860c i2 Blade,600859-001
+,5000018606,1142685,In Use,Pod 1,AM-010,Ashburn OCE Building,,DataSMART T1 DSU/CSU,78561
+,5000019968,20391,In Use,Pod 4,,Ashburn OCE Building,,Virtual Storage Platform G1500,VSP G1500
+,1000089884,QTFCKJ54600168,In Use,Pod 2,,Ashburn OCE Building,,T41S,T41S-2U
+,5000019969,20387,In Use,Pod 5,,Ashburn OCE Building,,Virtual Storage Platform G1500,VSP G1500
+,5000018661,QTFCJ073702C6,In Use,Pod 1,,Ashburn OCE Building,,Hitachi Content Platform S10,HCP-Rhino-G10
+,5000018662,QTFCJ073702D0,In Use,Pod 1,,Ashburn OCE Building,,Hitachi Content Platform S10,HCP-Rhino-G10
+,5000020213,SGH2132M0W,In Use,Pod 5,BM-028,Ashburn OCE Building,,ProLiant BL860c i2 Blade,600859-001
+,5000018620,1727NM7837,In Use,Pod 1,BT-049,Ashburn OCE Building,,Exadata Storage Server X6-2,7113348
+,5000018619,1727NM7863,In Use,Pod 1,BT-049,Ashburn OCE Building,,Exadata Storage Server X6-2,7113348
+,5000018660,QTFCJ07370354,In Use,Pod 1,,Ashburn OCE Building,,Hitachi Content Platform S10,HCP-Rhino-G10
