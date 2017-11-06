@@ -3,7 +3,7 @@ public abstract class Sheet {
 
 	String[]values;
 	
-	public Sheet(String[] values) {
+	Sheet(String[] values) {
 		this.values = values;
 	}
 
@@ -16,6 +16,8 @@ public abstract class Sheet {
 	public abstract String operationalStatus();
 	
 	public abstract String cabinateName();
+
+	public abstract String location();
 	
 	public String getNumber() {
 		throw new UnsupportedOperationException("Can't do this with UAPM sheet");
@@ -29,7 +31,7 @@ public abstract class Sheet {
 		throw new UnsupportedOperationException("Can't do this with UAPM sheet");
 	}
 	
-	public String[] getLine() {
+	String[] getLine() {
 		return values;
 	}
 	// Printing line values, local methods
@@ -37,7 +39,8 @@ public abstract class Sheet {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i != values.length; ++i) {
-			sb.append(values[i] + ", ");
+			sb.append(values[i]);
+			sb.append(", ");
 		}
 		return sb.toString();
 	}

@@ -15,17 +15,17 @@ class RepoCompare {
     boolean cabinetsCompare(Sheet nlyte, Sheet uapm) {
         String cab = nlyte.cabinateName();
         String uapmcab = uapm.cabinateName();
-        if (cab.equals("NoCab") || cab.contains("NBD") || cab.contains("VTL")) {
-            return false;
-        } else if (uapm.cabinateName().equals(nlyte.cabinateName())) {
-            return false;
-        } else if (uapmcab.length() == 6) {
-            String nl = cab.substring(0,3);
-            String ua = uapmcab.substring(0,3);
-            int rowNlyte = Integer.parseInt(cab.substring(3, 6));
-            int rowUAPM = Integer.parseInt(uapmcab.substring(3, 6));
-            if ((rowNlyte + 1) == rowUAPM || (rowNlyte - 1) == rowUAPM) {
-                    return !nl.equals(ua);
+        if(nlyte.location().contains("Ashburn")) {
+            if (cab.equals("NoCab") || cab.contains("NBD") || cab.contains("VTL")) {
+                return false;
+            } else if (uapm.cabinateName().equals(nlyte.cabinateName())) {
+                return false;
+            } else if (uapmcab.length() == 6) {
+                int rowNlyte = Integer.parseInt(cab.substring(3, 6));
+                int rowUAPM = Integer.parseInt(uapmcab.substring(3, 6));
+                if ((rowNlyte + 1) == rowUAPM || (rowNlyte - 1) == rowUAPM) {
+                    return false;
+                }
             }
         }
         return true;

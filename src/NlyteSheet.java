@@ -27,6 +27,10 @@ public class NlyteSheet extends Sheet {
 	}
 
 	@Override
+	public String location() {
+		return values[7].trim();
+	}
+	@Override
 	public String cabinateName() {
 		if (values[8].length() != 6) {
 			return "NoCab";

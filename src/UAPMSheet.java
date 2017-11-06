@@ -1,7 +1,7 @@
 
 public class UAPMSheet extends Sheet {
 
-	public UAPMSheet(String[] values) {
+	UAPMSheet(String[] values) {
 		super(values);
 	}
 
@@ -41,6 +41,14 @@ public class UAPMSheet extends Sheet {
 		}
 
 		return sb.toString();
+	}
+
+	@Override
+	public String location() {
+		String s = "";
+	    if (values[9].contains("Highlands Ranch")) s =  values[9].trim();
+		else if (values[6].contains("Ashburn")) s =  values[6].trim();
+        return s;
 	}
 
 }

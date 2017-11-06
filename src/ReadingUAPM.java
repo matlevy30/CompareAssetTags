@@ -55,9 +55,8 @@ public class ReadingUAPM extends Reading {
 		return line[3].equals("In Use");
 	}
 
-	// Filter by Tags that are not Active Operational but In Use in UAPM
 	private boolean exceptionTags(String[] line) {
-		String[] tags = { "5000006041", "1000014833", "1000124937", "1000124938", "1000094431" };
+		String[] tags = { "5000006041", "1000124937", "1000124938", "1000094431" };
 		for (String tag : tags) {
 			if (tag.equals(line[1])) {
 				return false;
