@@ -38,7 +38,7 @@ public class ReadingUAPM extends Reading {
 		if (line[9].contains("Highlands Ranch")) {
 			if (line[4].equals("Data Center") || line[4].contains("Data Hall") || line[4].contains("Telco")
 					|| line[4].equals("Demarc") || line[4].equals("Hallway") || line[4].equals("Loading Dock")
-					|| line[4].contains("Storage Room") || line[4].contains("Tape") || line[4].contains("VOCC")) {
+					|| line[4].contains("Storage Room") || line[4].contains("Tape")) {
 				return exceptionTagsOCC(line);
 			}
 		}

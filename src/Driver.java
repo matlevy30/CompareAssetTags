@@ -5,8 +5,7 @@ public class Driver {
 	// REMEMBER TO CHANGE , TO . for the UAPM file and use txt to do this change
 	private static ArrayList<Sheet> missingTags;
 	private static ArrayList<Sheet> TagstoFix;
-	private static ArrayList<Sheet> update;
-	public static ArrayList<Sheet> status;
+	private static ArrayList<Sheet> status;
 	private static ArrayList<Sheet> cabinet;
 
 	public static void main(String[] args) throws IOException {
@@ -26,9 +25,6 @@ public class Driver {
 		// Assets in Nlyte but Not in UAPM
 		TagstoFix = new ArrayList<>();
 
-		// Assets where found Tags and No Serial and Vice versa
-		update = new ArrayList<>();
-
 		// Assets In Use in UAPM but Not Operational
 		status = new ArrayList<>();
 
@@ -44,9 +40,6 @@ public class Driver {
 		write.wirte();
 
 		write = new WriteCSV(nlyte.getHeader(), TagstoFix, "Fix.csv");
-		write.wirte();
-
-		write = new WriteCSV(nlyte.getHeader(), update, "Update.csv");
 		write.wirte();
 
 		write = new WriteCSV(nlyte.getHeader(), status, "Status.csv");
@@ -76,7 +69,6 @@ public class Driver {
 					// Determining if serial numbers match if they don't update serial
 					else if (comparator.serialVerification(nlyte.get(i), uapm.get(j))) {
 						System.out.println(uapm.get(j).assetTag() + " " + uapm.get(j).serialNumber());
-						// update.add(addSerial(nlyte.get(i), uapm.get(j).serialNumber()));
 					}
 					// Comparing Cabinets Location
 					if (comparator.cabinetsCompare(nlyte.get(i), uapm.get(j))) {
@@ -95,7 +87,6 @@ public class Driver {
 					else if (!(nlyte.get(i).HostName().contains("Module"))
 							&& !(nlyte.get(i).assetTag().contains("CHILD"))) {
 						System.out.println(uapm.get(j).assetTag() + " " + uapm.get(j).serialNumber());
-						// update.add(addTag(nlyte.get(i), uapm.get(j).assetTag()));
 					}
 					found = true;
 				}
