@@ -43,10 +43,14 @@ public class ReadingUAPM extends Reading {
 			}
 		}
 		// OCE Locations
-		if (line[6].contains("Ashburn")) {
+		else if (line[6].contains("Ashburn")) {
 			if (line[4].contains("Pod") && !(line[5].equals("Tape Library"))) {
 				return exceptionTags(line);
 			}
+		}
+		//OCS Locations
+		else if(line[8].contains("Singapore")) {
+			return true;
 		}
 		return false;
 	}

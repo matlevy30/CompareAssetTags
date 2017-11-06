@@ -12,6 +12,12 @@ public class UAPMSheet extends Sheet {
 
 	@Override
 	public String serialNumber() {
+		//Replacing Special Character that Excel puts once downloaded
+		char a = 160;
+		String especial = Character.toString(a);
+		if(values[2].contains(especial)) {
+			values[2] = values[2].replace(a,' ');
+		}
 		return values[2].trim();
 	}
 
@@ -29,7 +35,10 @@ public class UAPMSheet extends Sheet {
 	public String cabinateName() {
 		StringBuilder sb = new StringBuilder();
 
-		if (values[5].length() != 0) {
+		if(values[8].contains("Singapore")) {
+			sb.append(values[5]);
+		}
+		else if (values[5].length() != 0) {
 
 			int pod = values[4].length() - 1;
 			sb.append(values[4].substring(pod));
@@ -39,7 +48,6 @@ public class UAPMSheet extends Sheet {
 			sb.append(values[5].substring(pos + 1, values[5].length()));
 
 		}
-
 		return sb.toString();
 	}
 

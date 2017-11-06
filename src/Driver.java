@@ -68,7 +68,7 @@ public class Driver {
 					}
 					// Determining if serial numbers match if they don't update serial
 					else if (comparator.serialVerification(nlyte.get(i), uapm.get(j))) {
-						System.out.println(uapm.get(j).assetTag() + " " + uapm.get(j).serialNumber());
+						System.out.println(uapm.get(j).assetTag() + " " + uapm.get(j).serialNumber()+ " (Serial Update)");
 					}
 					// Comparing Cabinets Location
 					if (comparator.cabinetsCompare(nlyte.get(i), uapm.get(j))) {
@@ -86,7 +86,7 @@ public class Driver {
 					// Assets to be updated by adding the Asset tag by comparing Serial Numbers
 					else if (!(nlyte.get(i).HostName().contains("Module"))
 							&& !(nlyte.get(i).assetTag().contains("CHILD"))) {
-						System.out.println(uapm.get(j).assetTag() + " " + uapm.get(j).serialNumber());
+						System.out.println(uapm.get(j).assetTag() + " " + uapm.get(j).serialNumber() + " (Tag Update)");
 					}
 					found = true;
 				}

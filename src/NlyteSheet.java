@@ -32,9 +32,16 @@ public class NlyteSheet extends Sheet {
 	}
 	@Override
 	public String cabinateName() {
-		if (values[8].length() != 6) {
+
+		if(location().contains("Singapore")) {
+			if(values[8].length() !=3) {
+				return "NoCab";
+			}
+		}
+		else if (values[8].length() != 6) {
 			return "NoCab";
 		}
+
 		return values[8].trim();
 	}
 	

@@ -75,6 +75,7 @@ public class ReadingNlyte extends Reading {
 				return true;
 			}
 		} else if (line[7].contains("Singapore")) {
+			if(line[7].contains("Floor 6"))
 			return true;
 		}
 		return false;

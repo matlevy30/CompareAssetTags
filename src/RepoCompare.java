@@ -8,7 +8,7 @@ class RepoCompare {
 
     //After tag compare verify that serials are the same
     boolean serialVerification(Sheet nlyte, Sheet uapm) {
-        return !(uapm.serialNumber().contains("?")) && !(nlyte.serialNumber().equalsIgnoreCase(uapm.serialNumber()));
+       return !(uapm.serialNumber().contains("?")) && !(nlyte.serialNumber().equalsIgnoreCase(uapm.serialNumber()));
     }
 
     //Comparing Cabinets
@@ -26,6 +26,14 @@ class RepoCompare {
                 if ((rowNlyte + 1) == rowUAPM || (rowNlyte - 1) == rowUAPM) {
                     return false;
                 }
+            }
+        }
+        else if(nlyte.location().contains("Singapore")) {
+            if (cab.equals("NoCab") || cab.contains("NBD") || cab.contains("VTL")) {
+                return false;
+            }
+            else if (uapm.cabinateName().equals(nlyte.cabinateName())) {
+                return false;
             }
         }
         return true;
