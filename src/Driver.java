@@ -72,6 +72,7 @@ public class Driver {
 					}
 					// Comparing Cabinets Location
 					if (comparator.cabinetsCompare(nlyte.get(i), uapm.get(j))) {
+						nlyte.get(i).setCabinateName(uapm.get(j).cabinateName());
 						cabinet.add(nlyte.get(i));
 						//System.out.println(uapm.get(j).cabinateName() + " " +nlyte.get(i).cabinateName());
 					}

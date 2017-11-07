@@ -50,7 +50,9 @@ public class ReadingUAPM extends Reading {
 		}
 		//OCS Locations
 		else if(line[8].contains("Singapore")) {
-			return true;
+			if(line[4].equals("Data Center") || line[4].equals("Staging Room")) {
+				return true;
+			}
 		}
 		return false;
 	}

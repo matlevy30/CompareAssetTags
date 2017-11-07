@@ -34,19 +34,40 @@ public class UAPMSheet extends Sheet {
 	@Override
 	public String cabinateName() {
 		StringBuilder sb = new StringBuilder();
-
+		//OCS Cabinet Name
 		if(values[8].contains("Singapore")) {
 			sb.append(values[5]);
 		}
-		else if (values[5].length() != 0) {
+		//OCC Cabinet Name
+		else if(values[9].contains("Highlands Ranch")) {
+			if(values[5].contains("Row") || values[5].contains("Cab")) {
+				String up = values[5].toUpperCase();
+				String v = up.replace("ROW", "");
+				String v2 = v.replace("CAB C", "");
+				String v3 = v2.replace(" ", "");
+				String v4 = v3.replace("RACK","A-");
+				sb.append(v4.trim());
+			}
+			else if(values[5].contains("PKI")) {
+				String up = values[5].toUpperCase();
+				String v = up.replace(" PKI CAGE", "");
+				sb.append(v.trim());
+			}
+			else {
+				sb.append(values[5]);
+			}
+		}
+		//OCE cabinet Name
+		else if(values[6].contains("Ashburn")) {
+			if (values[5].length() != 0) {
+				int pod = values[4].length() - 1;
+				sb.append(values[4].substring(pod));
 
-			int pod = values[4].length() - 1;
-			sb.append(values[4].substring(pod));
+				int pos = values[5].indexOf("-");
+				sb.append(values[5].substring(0, pos));
+				sb.append(values[5].substring(pos + 1, values[5].length()));
 
-			int pos = values[5].indexOf("-");
-			sb.append(values[5].substring(0, pos));
-			sb.append(values[5].substring(pos + 1, values[5].length()));
-
+			}
 		}
 		return sb.toString();
 	}
@@ -58,5 +79,4 @@ public class UAPMSheet extends Sheet {
 		else if (values[6].contains("Ashburn")) s =  values[6].trim();
         return s;
 	}
-
 }

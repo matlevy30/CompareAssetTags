@@ -30,16 +30,29 @@ public class NlyteSheet extends Sheet {
 	public String location() {
 		return values[7].trim();
 	}
+
+	@Override
+	public void setCabinateName(String uapm) {
+		values[8] = cabinateName() +" || "+ uapm;
+	}
+
+
 	@Override
 	public String cabinateName() {
-
 		if(location().contains("Singapore")) {
 			if(values[8].length() !=3) {
 				return "NoCab";
 			}
 		}
-		else if (values[8].length() != 6) {
-			return "NoCab";
+		else if(location().contains("Highlands Ranch")) {
+			if(values[8].length() == 0 ){
+				return "NoCab";
+			}
+		}
+		else if(location().contains("Ashburn")) {
+			if (values[8].length() != 6) {
+				return "NoCab";
+			}
 		}
 
 		return values[8].trim();

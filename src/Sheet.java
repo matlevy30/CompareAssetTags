@@ -18,6 +18,8 @@ public abstract class Sheet {
 	public abstract String cabinateName();
 
 	public abstract String location();
+
+	public void setCabinateName(String uapm) {throw new UnsupportedOperationException("Can't do this with UAPM sheet");}
 	
 	public String getNumber() {
 		throw new UnsupportedOperationException("Can't do this with UAPM sheet");
