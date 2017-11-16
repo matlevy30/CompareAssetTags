@@ -59,7 +59,11 @@ public class UAPMSheet extends Sheet {
 		}
 		//OCE cabinet Name
 		else if(values[6].contains("Ashburn")) {
-			if (values[5].length() != 0) {
+			//Back Office Cabinets
+			if (values[5].contains("Cabinet")) {
+				sb.append(values[5]);
+			}
+			else if (values[5].length() != 0) {
 				int pod = values[4].length() - 1;
 				sb.append(values[4].substring(pod));
 

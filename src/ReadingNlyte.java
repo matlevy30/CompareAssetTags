@@ -71,7 +71,7 @@ public class ReadingNlyte extends Reading {
 		}
 		// OCE Locations Rooms
 		else if (line[7].contains("Ashburn")) {
-			if (line[7].contains("POD ")) {
+			if (line[7].contains("POD ") || line[7].contains("Back Office")) {
 				return true;
 			}
 		} else if (line[7].contains("Singapore")) {

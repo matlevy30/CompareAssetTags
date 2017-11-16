@@ -30,7 +30,8 @@ class RepoCompare {
             }
         }
         else if(nlyte.location().contains("Highlands Ranch")) {
-            if (cab.equals("NoCab") || cab.contains("ITD") || cab.contains("OFD") || cab.contains("TCH") || cab.contains("SU550") || cab.contains("TELCO") || cab.contains("TPF")) {
+            if (cab.equals("NoCab") || cab.contains("ITD") || cab.contains("OFD") ||
+                    cab.contains("TCH") || cab.contains("SU550") || cab.contains("TELCO") || cab.contains("TPF")) {
                 return false;
             } else if (nlyte.cabinateName().contains(uapm.cabinateName())) {
                 return false;

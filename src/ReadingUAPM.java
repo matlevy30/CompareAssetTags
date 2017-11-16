@@ -44,7 +44,8 @@ public class ReadingUAPM extends Reading {
 		}
 		// OCE Locations
 		else if (line[6].contains("Ashburn")) {
-			if (line[4].contains("Pod") && !(line[5].equals("Tape Library"))) {
+			if ((line[4].contains("Pod") || line[4].equals("AV Room")
+					|| line[4].contains("PKI") || line[4].contains("TR"))&& !(line[5].equals("Tape Library"))) {
 				return exceptionTags(line);
 			}
 		}
@@ -72,7 +73,7 @@ public class ReadingUAPM extends Reading {
 	}
 	
 	private boolean exceptionTagsOCC(String[] line) {
-		String[] tags = { "1000120832", "1000120833" };
+		String[] tags = { "1000120832", "1000120833", "1000081933" };
 		for (String tag : tags) {
 			if (tag.equals(line[1])) {
 				return false;
