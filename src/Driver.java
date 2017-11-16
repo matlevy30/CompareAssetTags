@@ -48,6 +48,12 @@ public class Driver {
 		write = new WriteCSV(nlyte.getHeader(), cabinet, "Cabinet.csv");
 		write.wirte();
 
+		WriteExcel w = new WriteExcel();
+		w.writtingSheet(uapm.getHeader(), missingTags, "Missing");
+		w.writtingSheet(nlyte.getHeader(), TagstoFix, "Fix");
+		w.writtingSheet(nlyte.getHeader(), status, "Status");
+		w.writtingSheet(nlyte.getHeader(), cabinet, "Cabinet");
+
 	}
 
 	// Comparing Tags
