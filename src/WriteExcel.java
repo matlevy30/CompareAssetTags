@@ -10,16 +10,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class WriteExcel {
+class WriteExcel {
 
-    private static final String fileName = "CompareAssetTags/files/Missing.xlsx";
+    private static final String fileName = "CompareAssetTags/src/Missing.xlsx";
     private XSSFWorkbook workbook;
 
     WriteExcel() {
         workbook = new XSSFWorkbook();
     }
 
-    public void writtingSheet(String[] header, ArrayList<Sheet> list, String sheetName) throws IOException {
+    void writtingSheet(String[] header, ArrayList<Sheet> list, String sheetName) throws IOException {
         XSSFSheet sheet = workbook.createSheet(sheetName);
 
         writtingHeader(header, sheet);
