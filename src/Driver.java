@@ -35,19 +35,7 @@ public class Driver {
 		// Comparing Asset Tag Info for both Nlyte -> UAPM
 		compareTag(NlyteInfo, UAPMInfo);
 		// =======================================================================
-		// Creating CSV files all of the lists
-		WriteCSV write = new WriteCSV(uapm.getHeader(), missingTags, "Missing.csv");
-		write.wirte();
-
-		write = new WriteCSV(nlyte.getHeader(), TagstoFix, "Fix.csv");
-		write.wirte();
-
-		write = new WriteCSV(nlyte.getHeader(), status, "Status.csv");
-		write.wirte();
-
-		write = new WriteCSV(nlyte.getHeader(), cabinet, "Cabinet.csv");
-		write.wirte();
-
+		// Creating xlsx files all of the lists
 		WriteExcel w = new WriteExcel();
 		w.writtingSheet(uapm.getHeader(), missingTags, "Missing");
 		w.writtingSheet(nlyte.getHeader(), TagstoFix, "Fix");
