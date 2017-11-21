@@ -51,10 +51,11 @@ public class NlyteSheet extends Sheet {
 		}
 		//NoCab also for the Back Office Rooms and Cab Names that have blank
 		else if(location().contains("Ashburn")) {
-			if (values[8].length() != 6) {
-				return "NoCab";
+            if (values[8].length() != 6 || values[8].contains("PKI")) {
+                return "NoCab";
 			}
-		}
+
+        }
 
 		return values[8].trim();
 	}

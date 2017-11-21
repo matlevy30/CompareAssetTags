@@ -1,9 +1,9 @@
+import au.com.bytecode.opencsv.CSVReader;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-
-import au.com.bytecode.opencsv.CSVReader;
 
 public class ReadingUAPM extends Reading {
 
@@ -26,7 +26,7 @@ public class ReadingUAPM extends Reading {
 		while (line != null) {
 			// Filtering Locations
 			if (filterStatus(line) && filterLocation(line)) {
-					lines.add(new UAPMSheet(line));
+				lines.add(new UAPMSheet(line));
 			}
 			line = reader.readNext();
 		}
@@ -45,7 +45,10 @@ public class ReadingUAPM extends Reading {
 		// OCE Locations
 		else if (line[6].contains("Ashburn")) {
 			if ((line[4].contains("Pod") || line[4].equals("AV Room")
-					|| line[4].contains("PKI") || line[4].contains("TR"))&& !(line[5].equals("Tape Library"))) {
+					|| line[4].contains("PKI") || line[4].contains("TR")
+					|| line[4].contains("Switch Gear") || line[4].contains("UPS"))
+					&& !(line[5].equals("Tape Library")) && !line[4].equals("UPS 6A")
+					&& !line[4].equals("UPS 7B") && !line[4].equals("NOC")) {
 				return exceptionTags(line);
 			}
 		}
@@ -71,7 +74,7 @@ public class ReadingUAPM extends Reading {
 		}
 		return true;
 	}
-	
+
 	private boolean exceptionTagsOCC(String[] line) {
 		String[] tags = { "1000120832", "1000120833", "1000081933" };
 		for (String tag : tags) {
