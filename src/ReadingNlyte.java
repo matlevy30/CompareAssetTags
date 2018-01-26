@@ -1,11 +1,12 @@
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class ReadingNlyte extends Reading {
 	private XSSFSheet reader;
@@ -71,11 +72,11 @@ public class ReadingNlyte extends Reading {
 		}
 		// OCE Locations Rooms
 		else if (line[7].contains("Ashburn")) {
-			if (line[7].contains("POD ") || line[7].contains("Back Office")) {
+			if (line[7].contains("POD ") || line[7].contains("Back Office") || line[7].contains("Admin and Security\\Floor")) {
 				return true;
 			}
 		} else if (line[7].contains("Singapore")) {
-			if(line[7].contains("Floor 6"))
+			if (line[7].contains("Floor 6") && !(line[4].equals("H1YZZ52")))
 			return true;
 		}
 		return false;

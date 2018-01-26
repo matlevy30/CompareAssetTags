@@ -48,13 +48,15 @@ public class ReadingUAPM extends Reading {
 					|| line[4].contains("PKI") || line[4].contains("TR")
 					|| line[4].contains("Switch Gear") || line[4].contains("UPS"))
 					&& !(line[5].equals("Tape Library")) && !line[4].equals("UPS 6A")
-					&& !line[4].equals("UPS 7B") && !line[4].equals("NOC")) {
+					&& !line[4].equals("UPS 7B") && !line[4].contains("NOC")) {
 				return exceptionTags(line);
+			} else if (line[4].equals("Telco Room")) {
+				return true;
 			}
 		}
 		//OCS Locations
 		else if(line[8].contains("Singapore")) {
-			if(line[4].equals("Data Center") || line[4].equals("Staging Room")) {
+			if (line[4].equals("Data Center")) {
 				return true;
 			}
 		}
@@ -76,7 +78,7 @@ public class ReadingUAPM extends Reading {
 	}
 
 	private boolean exceptionTagsOCC(String[] line) {
-		String[] tags = { "1000120832", "1000120833", "1000081933" };
+		String[] tags = {"1000120832", "1000120833", "1000081933", "1000065358"};
 		for (String tag : tags) {
 			if (tag.equals(line[1])) {
 				return false;
