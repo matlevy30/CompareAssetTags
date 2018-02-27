@@ -7,6 +7,7 @@ public class Driver {
 	private static ArrayList<Sheet> TagstoFix;
 	private static ArrayList<Sheet> status;
 	private static ArrayList<Sheet> cabinet;
+	private static ArrayList<Sheet> updateCSV;
 
 	public static void main(String[] args) throws IOException {
 		// Reading Nlyte XLSX file
@@ -31,6 +32,9 @@ public class Driver {
 		// Assets Cabinate Match
 		cabinet = new ArrayList<>();
 
+		//Update List
+		updateCSV = new ArrayList<>();
+
 		// =======================================================================
 		// Comparing Asset Tag Info for both Nlyte -> UAPM
 		compareTag(NlyteInfo, UAPMInfo);
@@ -41,6 +45,11 @@ public class Driver {
 		w.writtingSheet(nlyte.getHeader(), TagstoFix, "Fix");
 		w.writtingSheet(nlyte.getHeader(), status, "Status");
 		w.writtingSheet(nlyte.getHeader(), cabinet, "Cabinet");
+
+
+		//Writing CSV to write to Tag Fix for SQL Update
+		WriteCSV csv = new WriteCSV(nlyte.getHeader(), updateCSV, "Update.csv");
+		csv.wirte();
 
 	}
 
@@ -53,8 +62,7 @@ public class Driver {
 		RepoCompare comparator = new RepoCompare(); // Comparator
 		for (int i = 0; i != nlyte.size(); ++i) {
 			for (int j = 0; j != uapm.size(); ++j) {
-				// If the tag is found then add it to the haveTag list and remove from
-				// missingTag
+				// Comparing if tags are the same
 				if (comparator.compareTag(nlyte.get(i), uapm.get(j))) {
 					// Has to be Active Operational
 					if (comparator.statusCompare(nlyte.get(i))) {
@@ -63,6 +71,8 @@ public class Driver {
 					// Determining if serial numbers match if they don't update serial
 					else if (comparator.serialVerification(nlyte.get(i), uapm.get(j))) {
 						System.out.println(uapm.get(j).assetTag() + " " + uapm.get(j).serialNumber()+ " (Serial Update)");
+						nlyte.get(i).setSerial(uapm.get(j).serialNumber());
+						updateCSV.add(nlyte.get(i));
 					}
 					// Comparing Cabinets Location
 					if (comparator.cabinetsCompare(nlyte.get(i), uapm.get(j))) {
@@ -82,6 +92,8 @@ public class Driver {
 					else if (!(nlyte.get(i).HostName().contains("Module"))
 							&& !(nlyte.get(i).assetTag().contains("CHILD"))) {
 						System.out.println(uapm.get(j).assetTag() + " " + uapm.get(j).serialNumber() + " (Tag Update)");
+						nlyte.get(i).setAssetTag(uapm.get(j).assetTag());
+						updateCSV.add(nlyte.get(i));
 					}
 					found = true;
 				}

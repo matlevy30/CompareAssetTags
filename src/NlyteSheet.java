@@ -74,5 +74,6 @@ public class NlyteSheet extends Sheet {
 	public void setAssetTag(String s) {
 		values[4] = s.trim().toUpperCase();
 	}
-	
+
+
 }

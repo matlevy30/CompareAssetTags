@@ -1,5 +1,5 @@
-import java.io.FileWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -24,7 +24,7 @@ class WriteCSV {
 		File f;
 		FileWriter file = null;
 		try {
-			f = new File("CompareAssetTags\\files",fileName);
+			f = new File("CompareAssetTags\\src", fileName);
 			file = new FileWriter(f);
 			//Header
 			int z = 0;
@@ -53,7 +53,6 @@ class WriteCSV {
 			e.printStackTrace();
 		} finally {
 			try {
-				file.flush();
 				file.close();
 			} catch (IOException e) {
 				System.out.println("Error while flushing/closing fileWriter !!!");
