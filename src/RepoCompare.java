@@ -1,5 +1,3 @@
-import org.apache.xmlbeans.impl.schema.StscChecker;
-
 class RepoCompare {
 
     //Comparing String Tags
@@ -9,7 +7,7 @@ class RepoCompare {
 
     //After tag compare verify that serials are the same
     boolean serialVerification(Sheet nlyte, Sheet uapm) {
-       return !(uapm.serialNumber().contains("?")) && !(nlyte.serialNumber().equalsIgnoreCase(uapm.serialNumber()));
+        return !(uapm.serialNumber().contains("?")) && !(uapm.serialNumber().equals("")) && !(nlyte.serialNumber().equalsIgnoreCase(uapm.serialNumber()));
     }
 
     //Comparing Cabinets
@@ -69,6 +67,5 @@ class RepoCompare {
     boolean statusCompare(Sheet nlyte) {
         return !nlyte.operationalStatus().equals("Operational");
     }
-
 
 }

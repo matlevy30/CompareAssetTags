@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Driver {
 	// REMEMBER TO CHANGE , TO . for the UAPM file and use txt to do this change
@@ -42,9 +43,13 @@ public class Driver {
 		// Creating xlsx files all of the lists
 		WriteExcel w = new WriteExcel();
 		w.writtingSheet(uapm.getHeader(), missingTags, "Missing");
-		w.writtingSheet(nlyte.getHeader(), TagstoFix, "Fix");
-		w.writtingSheet(nlyte.getHeader(), status, "Status");
-		w.writtingSheet(nlyte.getHeader(), cabinet, "Cabinet");
+        String[] header = nlyte.getHeader();
+        header[11] = "Reason";
+        w.writtingSheet(nlyte.getHeader(), TagstoFix, "Fix");
+        w.writtingSheet(nlyte.getHeader(), status, "Status");
+        header = nlyte.getHeader();
+        header[8] = "Nlyte Location || UAPM Location";
+        w.writtingSheet(nlyte.getHeader(), cabinet, "Cabinet");
 
 
 		//Writing CSV to write to Tag Fix for SQL Update
@@ -56,65 +61,90 @@ public class Driver {
 	// Comparing Tags
 	private static void compareTag(ArrayList<Sheet> nlyte, ArrayList<Sheet> uapm) {
 		// Putting a copy of all uapm to missingTags
-		// missingTags.addAll(uapm);
-		missingTags = uapm; // to find duplicates
 		boolean found = false; // If tag was found or not
-		RepoCompare comparator = new RepoCompare(); // Comparator
-		for (int i = 0; i != nlyte.size(); ++i) {
-			for (int j = 0; j != uapm.size(); ++j) {
-				// Comparing if tags are the same
-				if (comparator.compareTag(nlyte.get(i), uapm.get(j))) {
-					// Has to be Active Operational
-					if (comparator.statusCompare(nlyte.get(i))) {
-						status.add(nlyte.get(i));
-					}
-					// Determining if serial numbers match if they don't update serial
-					else if (comparator.serialVerification(nlyte.get(i), uapm.get(j))) {
-						System.out.println(uapm.get(j).assetTag() + " " + uapm.get(j).serialNumber()+ " (Serial Update)");
-						nlyte.get(i).setSerial(uapm.get(j).serialNumber());
-						updateCSV.add(nlyte.get(i));
-					}
-					// Comparing Cabinets Location
-					if (comparator.cabinetsCompare(nlyte.get(i), uapm.get(j))) {
-						nlyte.get(i).setCabinateName(uapm.get(j).cabinateName());
-						cabinet.add(nlyte.get(i));
-						//System.out.println(uapm.get(j).cabinateName() + " " +nlyte.get(i).cabinateName());
-					}
-					found = true;
+        ArrayList<Sheet> nlyteover = new ArrayList<>();
+        nlyteover.addAll(nlyte);
+        RepoCompare comparator = new RepoCompare(); // Comparator
+        //Record encountered
+        HashSet<String> set = new HashSet<>();
+        for (int j = 0; j != uapm.size(); ++j) {
+            for (int i = 0; i != nlyte.size(); ++i) {
+                // Comparing if tags are the same and in UAPM is in USE
+                if (uapm.get(j).operationalStatus().equals("In Use") && uapm.get(j).filterLocation()) {
+                    if (comparator.compareTag(nlyte.get(i), uapm.get(j))) {
+                        // Has to be Active Operational
+                        if (comparator.statusCompare(nlyte.get(i))) {
+                            status.add(nlyte.get(i));
+                        }
+                        // Determining if serial numbers match if they don't update serial
+                        if (comparator.serialVerification(nlyte.get(i), uapm.get(j))) {
+                            System.out.println(uapm.get(j).assetTag() + " " + uapm.get(j).serialNumber() + " (Serial Update)");
+                            nlyte.get(i).setSerial(uapm.get(j).serialNumber());
+                            updateCSV.add(nlyte.get(i));
+                        }
+                        // Comparing Cabinets Location
+                        if (comparator.cabinetsCompare(nlyte.get(i), uapm.get(j))) {
+                            nlyte.get(i).setCabinateName(uapm.get(j).cabinateName());
+                            cabinet.add(nlyte.get(i));
+                            //System.out.println(uapm.get(j).cabinateName() + " " +nlyte.get(i).cabinateName());
+                        }
+                        nlyteover.remove(nlyte.get(i));
+                        found = true;
+                        break;
 
-				} else if (uapm.get(j).serialNumber().equals(nlyte.get(i).serialNumber())
-						&& !(uapm.get(j).serialNumber().equals(""))) {
-					// Has to be Active Operational
-					if (comparator.statusCompare(nlyte.get(i))) {
-						status.add(nlyte.get(i));
-					}
-					// Assets to be updated by adding the Asset tag by comparing Serial Numbers
-					else if (!(nlyte.get(i).HostName().contains("Module"))
-							&& !(nlyte.get(i).assetTag().contains("CHILD"))) {
-						System.out.println(uapm.get(j).assetTag() + " " + uapm.get(j).serialNumber() + " (Tag Update)");
-						nlyte.get(i).setAssetTag(uapm.get(j).assetTag());
-						updateCSV.add(nlyte.get(i));
-					}
-					found = true;
-				}
-				if (found) {
-					// Remove from List
-					missingTags.remove(uapm.get(j));
-					break;
-				}
-			}
-			if (!found) {
-				// Assets Tag that where not found in the UAPM sheet or have some kind of typo
-				// or funny info
-				if (!(nlyte.get(i).assetTag().equals("")) && !(nlyte.get(i).assetTag().contains("N/A"))
-						&& !(nlyte.get(i).assetTag().contains("CHILD"))) {
-					TagstoFix.add(nlyte.get(i));
-				}
-			}
-			found = false;
+                    } else if (!(uapm.get(j).serialNumber().equals("")) && uapm.get(j).serialNumber().equals(nlyte.get(i).serialNumber())) {
+                        // Has to be Active Operational
+                        if (comparator.statusCompare(nlyte.get(i))) {
+                            status.add(nlyte.get(i));
+                        }
+                        // Assets to be updated by adding the Asset tag by comparing Serial Numbers
+                        if (!(nlyte.get(i).HostName().contains("Module"))
+                                && !(nlyte.get(i).assetTag().contains("CHILD"))) {
+                            System.out.println(uapm.get(j).assetTag() + " " + uapm.get(j).serialNumber() + " (Tag Update)");
+                            nlyte.get(i).setAssetTag(uapm.get(j).assetTag());
+                            updateCSV.add(nlyte.get(i));
+                        }
+                        // Comparing Cabinets Location
+                        if (comparator.cabinetsCompare(nlyte.get(i), uapm.get(j))) {
+                            nlyte.get(i).setCabinateName(uapm.get(j).cabinateName());
+                            cabinet.add(nlyte.get(i));
+                        }
+                        nlyteover.remove(nlyte.get(i));
+                        found = true;
+                        break;
+                    }
+                }
+            }
+            if (!found && uapm.get(j).operationalStatus().equals("In Use") && uapm.get(j).filterLocation()) {
+                // Remove from List
+                missingTags.add(uapm.get(j));
+            }
+            found = false;
 		}
-
-	}
+        //Add remeining devices for Nlyte to be Fixed
+        TagstoFix.addAll(nlyteover);
+        for (Sheet exceptions : TagstoFix) {
+            exceptions.setReason("Asset not located in : " + exceptions.location() + " || No record in UAPM");
+            for (Sheet am : uapm) {
+                //Checking if the status of the tag or serial is not in USE
+                if (comparator.compareTag(exceptions, am)) {
+                    if (am.operationalStatus().equals("In Use")) {
+                        exceptions.setReason("Duplicated in Nlyte OR It is in a different Room: " + am.room());
+                    } else {
+                        exceptions.setReason(am.operationalStatus());
+                    }
+                    break;
+                } else if (!(am.serialNumber().equals("")) && am.serialNumber().equals(exceptions.serialNumber())) {
+                    if (am.operationalStatus().equals("In Use")) {
+                        exceptions.setReason("Duplicated in Nlyte OR It is in a different Room: " + am.room());
+                    } else {
+                        exceptions.setReason(am.operationalStatus() + " (Found by Serial Number) ");
+                    }
+                    break;
+                }
+            }
+        }
+    }
 
 	// Adding Serial Numbers from Asset Tags
 	@SuppressWarnings("unused")

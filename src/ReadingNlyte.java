@@ -46,7 +46,7 @@ public class ReadingNlyte extends Reading {
 	
 	// Filtering Blank and N/A Serial Number
 	private boolean blankSerial(String[] line) {
-		return !line[3].equals("") && !line[3].equals("N/A");
+		return !line[3].equals("") && !line[3].equals("N/A") && !line[4].contains("CHILD");
 	}
 
 	// Filtering Blank and N/A Asset Tag
@@ -72,7 +72,7 @@ public class ReadingNlyte extends Reading {
 		}
 		// OCE Locations Rooms
 		else if (line[7].contains("Ashburn")) {
-			if (line[7].contains("POD ") || line[7].contains("Back Office") || line[7].contains("Admin and Security\\Floor")) {
+			if (line[7].contains("POD ") || line[7].contains("Back Office") || line[7].contains("Admin and Security\\Floor") && !line[7].contains("Fusion Center")) {
 				return true;
 			}
 		} else if (line[7].contains("Singapore")) {

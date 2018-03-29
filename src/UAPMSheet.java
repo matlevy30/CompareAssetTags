@@ -77,6 +77,42 @@ public class UAPMSheet extends Sheet {
 	}
 
 	@Override
+	public String room() {
+		return values[4].trim();
+	}
+
+	//Location filter
+
+	public boolean filterLocation() {
+		// OCC Locations
+		if (values[9].contains("Highlands Ranch")) {
+			if (values[4].equals("Data Center") || values[4].contains("Data Hall") || values[4].equals("Telco Room")
+					|| values[4].equals("Demarc") || values[4].equals("Tape Storage")) {
+				return true;
+			}
+		}
+		// OCE Locations
+		else if (values[6].contains("Ashburn")) {
+			if ((values[4].contains("Pod") || values[4].equals("AV Room")
+					|| values[4].contains("PKI") || values[4].contains("TR")
+					|| values[4].contains("Switch Gear") || values[4].contains("UPS") || values[4].contains("ER"))
+					&& !(values[5].equals("Tape Library")) && !values[4].equals("UPS 6A")
+					&& !values[4].equals("UPS 7B") && !values[4].contains("NOC Room") && !values[4].contains("NOC Data Center")) {
+				return true;
+			} else if (values[4].equals("Telco Room")) {
+				return true;
+			}
+		}
+		//OCS Locations
+		else if (values[8].contains("Singapore")) {
+			if (values[4].equals("Data Center")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
 	public String location() {
 		String s = "";
 	    if (values[9].contains("Highlands Ranch")) s =  values[9].trim();

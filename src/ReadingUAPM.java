@@ -25,7 +25,7 @@ public class ReadingUAPM extends Reading {
 
 		while (line != null) {
 			// Filtering Locations
-			if (filterStatus(line) && filterLocation(line)) {
+			if (exceptionTagsOCE(line) && exceptionTagsOCC(line)) {
 				lines.add(new UAPMSheet(line));
 			}
 			line = reader.readNext();
@@ -33,41 +33,7 @@ public class ReadingUAPM extends Reading {
 
 	}
 
-	protected boolean filterLocation(String[] line) {
-		// OCC Locations
-		if (line[9].contains("Highlands Ranch")) {
-			if (line[4].equals("Data Center") || line[4].contains("Data Hall") || line[4].contains("Telco")
-					|| line[4].equals("Demarc") || line[4].equals("Hallway") || line[4].equals("Loading Dock")
-					|| line[4].contains("Storage Room") || line[4].contains("Tape")) {
-				return exceptionTagsOCC(line);
-			}
-		}
-		// OCE Locations
-		else if (line[6].contains("Ashburn")) {
-			if ((line[4].contains("Pod") || line[4].equals("AV Room")
-					|| line[4].contains("PKI") || line[4].contains("TR")
-					|| line[4].contains("Switch Gear") || line[4].contains("UPS"))
-					&& !(line[5].equals("Tape Library")) && !line[4].equals("UPS 6A")
-					&& !line[4].equals("UPS 7B") && !line[4].contains("NOC")) {
-				return exceptionTags(line);
-			} else if (line[4].equals("Telco Room")) {
-				return true;
-			}
-		}
-		//OCS Locations
-		else if(line[8].contains("Singapore")) {
-			if (line[4].equals("Data Center")) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private boolean filterStatus(String[] line) {
-		return line[3].equals("In Use");
-	}
-
-	private boolean exceptionTags(String[] line) {
+	private boolean exceptionTagsOCE(String[] line) {
 		String[] tags = { "5000006041", "1000124937", "1000124938", "1000094431" };
 		for (String tag : tags) {
 			if (tag.equals(line[1])) {

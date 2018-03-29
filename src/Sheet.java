@@ -32,7 +32,17 @@ public abstract class Sheet {
 	public void setAssetTag(String s) {
 		throw new UnsupportedOperationException("Can't do this with UAPM sheet");
 	}
-	
+
+	public void setReason(String s) {
+		throw new UnsupportedOperationException("Can't do this with UAPM sheet");
+	}
+
+	public abstract String room();
+
+	public boolean filterLocation() {
+		throw new UnsupportedOperationException("Can't do this with Nlyte sheet");
+	}
+
 	String[] getLine() {
 		return values;
 	}
