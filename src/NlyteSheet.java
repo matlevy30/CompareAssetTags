@@ -31,6 +31,10 @@ public class NlyteSheet extends Sheet {
         values[11] = s;  //Reason why is in the fix tab
     }
 
+	public String getReason() {
+		return values[11];
+	}
+
     @Override
     public String room() {
         return values[7].trim();
@@ -38,7 +42,8 @@ public class NlyteSheet extends Sheet {
 
 	@Override
 	public String location() {
-		return values[7].trim();
+		String[] location = values[7].split("\\\\");
+		return location[0].trim();
 	}
 
 	@Override

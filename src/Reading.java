@@ -3,20 +3,17 @@ import java.util.ArrayList;
 
 public abstract class Reading {
 
-	ArrayList<Sheet> lines;
+	protected ArrayList<Sheet> lines;
 	String[] header;
 
 
-	ArrayList<Sheet> getList() {
+	public ArrayList<Sheet> getList() {
 		return lines;
 	}
 	
 	public abstract void readLines() throws IOException;
 
-	protected boolean filterLocation(String[] line) {
-		throw new UnsupportedOperationException("Can't do this with UAPM sheet");
-	}
-
+	protected abstract boolean filterLocation(String[] line);
 
 	//Return Header of File
 	String[] getHeader() {

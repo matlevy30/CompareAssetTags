@@ -33,9 +33,20 @@ public abstract class Sheet {
 		throw new UnsupportedOperationException("Can't do this with UAPM sheet");
 	}
 
+	public String getReason() {
+		throw new UnsupportedOperationException("Can't do this with UAPM sheet");
+	}
 	public void setReason(String s) {
 		throw new UnsupportedOperationException("Can't do this with UAPM sheet");
 	}
+
+	public String Assetclass() {
+		throw new UnsupportedOperationException("Can't do this with Nlyte sheet");
+	}
+
+	;
+
+
 
 	public abstract String room();
 

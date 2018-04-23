@@ -10,6 +10,10 @@ class RepoCompare {
         return !(uapm.serialNumber().contains("?")) && !(uapm.serialNumber().equals("")) && !(nlyte.serialNumber().equalsIgnoreCase(uapm.serialNumber()));
     }
 
+    boolean compareLocation(Sheet nlyte, Sheet uapm) {
+        return nlyte.location().equals(uapm.location());
+    }
+
     //Comparing Cabinets
     boolean cabinetsCompare(Sheet nlyte, Sheet uapm) {
         String cab = nlyte.cabinateName();

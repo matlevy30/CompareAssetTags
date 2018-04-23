@@ -21,6 +21,7 @@ public class ReadingNlyte extends Reading {
 		header = new String[12];
 	}
 
+
 	public void readLines() throws IOException {
 		// Get iterator to all the rows in current sheet
 		Iterator<Row> rowIterator = reader.iterator();
@@ -46,20 +47,19 @@ public class ReadingNlyte extends Reading {
 	
 	// Filtering Blank and N/A Serial Number
 	private boolean blankSerial(String[] line) {
-		return !line[3].equals("") && !line[3].equals("N/A") && !line[4].contains("CHILD");
+		return !line[3].equals("");
 	}
 
 	// Filtering Blank and N/A Asset Tag
 	private boolean blankTag(String[] line) {
 		String tag = line[4].toUpperCase();
-		return !tag.equals("") && !tag.equals("N/A") && !tag.contains("CHILD");
+		return !tag.equals("") && !tag.equals("N/A");
 	}
 
 	// Filtering Type
 	private boolean filterType(String[] line) {
 		return line[10].equals("Server") || line[10].equals("Cabinet") || line[10].equals("Chassis")
-				|| line[10].equals("Peripheral") || line[10].equals("KVMSwitch") || line[10].equals("Network")
-				|| line[10].equals("Powerstrip");
+				|| line[10].equals("Peripheral") || line[10].equals("KVMSwitch") || line[10].equals("Network");
 	}
 
 	// Filtering Locations
@@ -81,6 +81,7 @@ public class ReadingNlyte extends Reading {
 		}
 		return false;
 	}
+
 
 	// Getting the header of the file
 	private void createHeader(Row row) {

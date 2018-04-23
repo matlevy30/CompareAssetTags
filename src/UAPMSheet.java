@@ -1,4 +1,3 @@
-
 public class UAPMSheet extends Sheet {
 
 	UAPMSheet(String[] values) {
@@ -35,7 +34,7 @@ public class UAPMSheet extends Sheet {
 	public String cabinateName() {
 		StringBuilder sb = new StringBuilder();
 		//OCS Cabinet Name
-		if(values[8].contains("Singapore")) {
+		if (values[9].contains("Singapore")) {
 			sb.append(values[5]);
 		}
 		//OCC Cabinet Name
@@ -58,7 +57,7 @@ public class UAPMSheet extends Sheet {
 			}
 		}
 		//OCE cabinet Name
-		else if(values[6].contains("Ashburn")) {
+		else if (values[9].contains("Ashburn")) {
 			//Back Office Cabinets
 			if (values[5].contains("Cabinet")) {
 				sb.append(values[5]);
@@ -74,6 +73,11 @@ public class UAPMSheet extends Sheet {
 			}
 		}
 		return sb.toString();
+	}
+
+	//Asset Found
+	public String Assetclass() {
+		return values[10].trim();
 	}
 
 	@Override
@@ -92,7 +96,7 @@ public class UAPMSheet extends Sheet {
 			}
 		}
 		// OCE Locations
-		else if (values[6].contains("Ashburn")) {
+		else if (values[9].contains("Ashburn")) {
 			if ((values[4].contains("Pod") || values[4].equals("AV Room")
 					|| values[4].contains("PKI") || values[4].contains("TR")
 					|| values[4].contains("Switch Gear") || values[4].contains("UPS") || values[4].contains("ER"))
@@ -104,7 +108,7 @@ public class UAPMSheet extends Sheet {
 			}
 		}
 		//OCS Locations
-		else if (values[8].contains("Singapore")) {
+		else if (values[9].contains("Singapore")) {
 			if (values[4].equals("Data Center")) {
 				return true;
 			}
@@ -114,9 +118,9 @@ public class UAPMSheet extends Sheet {
 
 	@Override
 	public String location() {
-		String s = "";
-	    if (values[9].contains("Highlands Ranch")) s =  values[9].trim();
-		else if (values[6].contains("Ashburn")) s =  values[6].trim();
-        return s;
+		if (values[9].contains("Highlands Ranch")) return "Highlands Ranch";
+		else if (values[9].contains("Ashburn")) return "Ashburn";
+		else if (values[9].contains("Singapore")) return "Singapore";
+		return values[9].trim();
 	}
 }

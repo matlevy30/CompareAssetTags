@@ -1,44 +1,44 @@
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
 class WriteExcel {
 
-    private static final String fileName = "CompareAssetTags/src/Missing.xlsx";
+    private String fileName;
     private XSSFWorkbook workbook;
 
-    WriteExcel() {
+    WriteExcel(String location) {
         workbook = new XSSFWorkbook();
+        fileName = "CompareAssetTags/src/" + location + "Missing.xlsx";
     }
 
-    void writtingSheet(String[] header, ArrayList<Sheet> list, String sheetName) throws IOException {
+    void writtingSheet(String[] header, ArrayList<Sheet> list, String sheetName, String location) throws IOException {
         XSSFSheet sheet = workbook.createSheet(sheetName);
 
         writtingHeader(header, sheet);
-        writtingSheet(list, sheet);
+        writtingSheet(list, sheet, location);
 
         try (FileOutputStream outputStream = new FileOutputStream(fileName)) {
             workbook.write(outputStream);
         }
     }
 
-    private void writtingSheet(ArrayList<Sheet> list, XSSFSheet sheet) {
+    private void writtingSheet(ArrayList<Sheet> list, XSSFSheet sheet, String location) {
         int rowCount = 1;
         for (Sheet line:list) {
-            String[] val = line.values;
-            Row row = sheet.createRow(rowCount++);
-            int columnCount = 0;
-            for (String field:val) {
-                Cell cell = row.createCell(columnCount++);
-                cell.setCellValue(field);
+            if (line.location().equals(location)) {
+                String[] val = line.values;
+                Row row = sheet.createRow(rowCount++);
+                int columnCount = 0;
+                for (String field : val) {
+                    Cell cell = row.createCell(columnCount++);
+                    cell.setCellValue(field);
+                }
             }
         }
     }
